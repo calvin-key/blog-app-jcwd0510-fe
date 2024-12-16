@@ -14,7 +14,7 @@ const Navbar = () => {
   const logout = () => {
     localStorage.removeItem("blog-storage");
     dispatch(logoutAction());
-    router.push("/login"); // kalau mau setelah logout page berubah ke login page
+    // router.push("/login"); // kalau mau setelah logout page berubah ke login page // dicomment karena pakai AuthGuard
   };
 
   return (
@@ -29,7 +29,15 @@ const Navbar = () => {
             <Link href="/">Home</Link>
             <Link href="/">Profile</Link>
             {!user.id && <Link href="/login">Sign In</Link>}
-            {!!user.id && <Button onClick={logout}>Logout</Button>}
+            {!!user.id && (
+              <>
+                <p onClick={() => router.push("/write")}>Write</p>
+                <Button onClick={logout} className="hover:bg-red-800">
+                  Logout
+                </Button>
+              </>
+            )}
+
             {/* {user.id ? <p>Logout</p> : <Link href="/">Sign In</Link>} bisa juga seperti ini */}
           </div>
         </div>
