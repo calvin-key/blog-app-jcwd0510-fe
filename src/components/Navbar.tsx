@@ -1,44 +1,88 @@
 "use client";
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { logoutAction } from "@/redux/slices/userSlice";
+import { Menu } from "lucide-react";
 import Link from "next/link";
-import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
+import { ToggleDarkMode } from "./ToggleDarkMode";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
-  const router = useRouter(); // kalau mau setelah logout page berubah ke login page
+  const router = useRouter();
   const user = useAppSelector((state) => state.user);
 
   const logout = () => {
     localStorage.removeItem("blog-storage");
     dispatch(logoutAction());
-    // router.push("/login"); // kalau mau setelah logout page berubah ke login page // dicomment karena pakai AuthGuard
   };
 
   return (
-    <nav className="bg-slate-200">
+    <nav>
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between py-2">
+        <div className="flex items-center justify-between py-4">
           <Link href="/" className="text-xl font-bold">
-            Logo
+            Blog<span className="text-orange-500">Hub</span>
           </Link>
 
-          <div className="flex cursor-pointer items-center gap-8 font-medium">
+          <div className="hidden cursor-pointer items-center gap-8 font-medium md:flex">
+            <ToggleDarkMode />
             <Link href="/">Home</Link>
             <Link href="/">Profile</Link>
-            {!user.id && <Link href="/login">Sign In</Link>}
+            {!user.id && <Link href="/login">Sign in</Link>}
             {!!user.id && (
               <>
                 <p onClick={() => router.push("/write")}>Write</p>
-                <Button onClick={logout} className="hover:bg-red-800">
-                  Logout
-                </Button>
+                <p onClick={logout}>Logout</p>
               </>
             )}
+          </div>
 
-            {/* {user.id ? <p>Logout</p> : <Link href="/">Sign In</Link>} bisa juga seperti ini */}
+          <div className="flex items-center gap-2 md:hidden">
+            <ToggleDarkMode />
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Menu />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>Menu</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Link href="/">Home</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href="/">Profile</Link>
+                </DropdownMenuItem>
+
+                {!user.id && (
+                  <DropdownMenuItem>
+                    <Link href="/login">Sign in</Link>
+                  </DropdownMenuItem>
+                )}
+                {!!user.id && (
+                  <>
+                    <DropdownMenuItem>
+                      <>
+                        <p onClick={() => router.push("/write")}>Write</p>
+                      </>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <>
+                        <p onClick={logout}>Logout</p>
+                      </>
+                    </DropdownMenuItem>
+                  </>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>
