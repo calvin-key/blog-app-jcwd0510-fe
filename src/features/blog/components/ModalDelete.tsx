@@ -10,17 +10,19 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { isPending } from "@reduxjs/toolkit";
 import { Trash } from "lucide-react";
 import { FC } from "react";
 
 interface ModalDeleteProps {
   onClick: () => void;
+  isPending: boolean;
 }
 
-const ModalDelete: FC<ModalDeleteProps> = ({ onClick }) => {
+const ModalDelete: FC<ModalDeleteProps> = ({ onClick, isPending }) => {
   return (
     <AlertDialog>
-      <AlertDialogTrigger>
+      <AlertDialogTrigger disabled={isPending}>
         {" "}
         <Button variant="outline" size="icon" className="hover:bg-red-500">
           <Trash />
