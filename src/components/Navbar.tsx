@@ -30,7 +30,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-4">
           <Link href="/" className="text-xl font-bold">
-            Blog<span className="text-orange-500">Hub</span>
+            BlogHub
           </Link>
 
           <div className="hidden cursor-pointer items-center gap-8 font-medium md:flex">
