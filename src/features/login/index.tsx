@@ -7,6 +7,7 @@ import { useFormik } from "formik";
 import { LoginSchema } from "./schemas";
 import { Button } from "@/components/ui/button";
 import useLogin from "@/hooks/api/auth/useLogin";
+import Link from "next/link";
 
 const LoginPage = () => {
   const { mutateAsync: login, isPending } = useLogin();
@@ -66,6 +67,10 @@ const LoginPage = () => {
             <Button type="submit" className="mt-4 w-full" disabled={isPending}>
               {isPending ? "Loading..." : "Login"}
             </Button>
+
+            <Link href="/register" className="mt-4 flex justify-center text-xs">
+              Don't have an account ? Register here
+            </Link>
           </form>
         </CardContent>
       </Card>
