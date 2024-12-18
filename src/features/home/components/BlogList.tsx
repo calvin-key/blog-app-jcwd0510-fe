@@ -3,7 +3,7 @@
 import PaginationSection from "@/components/PaginationSection";
 import { Input } from "@/components/ui/input";
 import useGetBlogs from "@/hooks/api/blog/useGetBlogs";
-import { FileMinus2 } from "lucide-react";
+import { FileMinus2, Loader2 } from "lucide-react";
 import { parseAsInteger, useQueryState } from "nuqs";
 import { useDebounceValue } from "usehooks-ts";
 import BlogCard from "./BlogCard";
@@ -35,16 +35,18 @@ const BlogList = () => {
 
       {isPending && (
         <div className="flex h-[30vh] items-center justify-center">
-          <h1 className="text-center">Loading...</h1>
+          <Loader2 className="animate-spin" />
         </div>
       )}
 
-      {!data?.data.length ? (
+      {!data?.data.length && !isPending && (
         <div className="flex h-[30vh] items-center justify-center">
           <FileMinus2 />
           <h1 className="text-center">No Data</h1>
         </div>
-      ) : (
+      )}
+
+      {!!data && !!data.data.length && (
         <>
           <div className="mt-9 grid gap-5 md:grid-cols-3">
             {data.data.map((blog, index) => {
