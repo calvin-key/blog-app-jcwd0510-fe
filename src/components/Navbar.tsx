@@ -22,7 +22,7 @@ const Navbar = () => {
   const logout = () => signOut();
 
   return (
-    <nav className="sticky top-0">
+    <nav className="sticky top-0 z-50 bg-white dark:bg-black">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-4">
           <Link href="/" className="text-xl font-bold">
